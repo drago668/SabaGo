@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SabaGo - Iniciar Sesión</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffb400, #ffcc70);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #222;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background: #ffb400;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e09e00;
+    }
+
+    a {
+      color: #ffb400;
+      text-decoration: none;
+      display: block;
+      margin-top: 15px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .logo {
+      width: 70px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/2920/2920349.png" class="logo" alt="logo">
+    <h2>Iniciar sesión</h2>
+
+    <form action="cliente.html" onsubmit="return validarLogin()">
+      <input type="email" id="correo" placeholder="Correo electrónico" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <a href="registro.html">¿No tienes cuenta? Regístrate</a>
+    <a href="index.html">Volver al inicio</a>
+  </div>
+
+  <script>
+    function validarLogin() {
+      const correo = document.getElementById('correo').value;
+      const password = document.getElementById('password').value;
+
+      if (correo === "cliente@sabago.com" && password === "1234") {
+        alert("Inicio de sesión exitoso ✅");
+        return true;
+      } else {
+        alert("Correo o contraseña incorrectos ❌");
+        return false;
+      }
+    }
+  </script>
+
+</body>
+</html>

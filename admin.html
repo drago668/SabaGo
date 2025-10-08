@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SabaGo - Administrador</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+    }
+
+    header {
+      background-color: #ffb400;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: relative;
+    }
+
+    header h1 {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- Botón hamburguesa --- */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #ffb400;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    .resumen {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card h3 {
+      color: #ffb400;
+      margin: 0;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background-color: white;
+      padding: 10px;
+      border-radius: 12px;
+      margin: 0 30px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    .tab.active {
+      background-color: #ffb400;
+      color: white;
+    }
+
+    .tab:hover {
+      background-color: #ffd966;
+    }
+
+    .pedidos {
+      padding: 30px;
+    }
+
+    .pedido {
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+      transition: 0.3s;
+    }
+
+    .pedido:hover {
+      transform: scale(1.02);
+    }
+
+    .estado {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .boton {
+      background-color: #ffb400;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .boton:hover {
+      background-color: #e09e00;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html"> <img src="assets\logoTransparente.png" alt="" style="width: 200px;"></a>
+    <h1> Admin</h1>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <nav id="menu">
+      <a href="cliente.html">Vista cliente</a>
+      <a href="index.html">Inicio</a>
+      <a href="login.html">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <section class="resumen">
+    <div class="card">
+      <h3>12</h3>
+      <p>Pendientes</p>
+    </div>
+    <div class="card">
+      <h3>8</h3>
+      <p>En preparación</p>
+    </div>
+    <div class="card">
+      <h3>6</h3>
+      <p>En camino</p>
+    </div>
+    <div class="card">
+      <h3>25</h3>
+      <p>Entregados</p>
+    </div>
+    <div class="card">
+      <h3>3</h3>
+      <p>Cancelados</p>
+    </div>
+  </section>
+
+  <section class="tabs">
+    <div class="tab active" onclick="mostrarTab('pendientes')">Pendientes</div>
+    <div class="tab" onclick="mostrarTab('preparacion')">En preparación</div>
+    <div class="tab" onclick="mostrarTab('camino')">En camino</div>
+    <div class="tab" onclick="mostrarTab('entregados')">Entregados</div>
+    <div class="tab" onclick="mostrarTab('cancelados')">Cancelados</div>
+  </section>
+
+  <section class="pedidos" id="contenido-pedidos"></section>
+
+  <script>
+    const pedidos = {
+      pendientes: [
+        { id: 1, cliente: "Juan Pérez", restaurante: "Burger House", total: "$25.000" },
+        { id: 2, cliente: "Ana García", restaurante: "Pizzería Roma", total: "$30.000" }
+      ],
+      preparacion: [
+        { id: 3, cliente: "Luis Torres", restaurante: "SushiGo", total: "$45.000" }
+      ],
+      camino: [
+        { id: 4, cliente: "Carlos Gómez", restaurante: "La Arepa Loca", total: "$20.000" }
+      ],
+      entregados: [
+        { id: 5, cliente: "Camila Díaz", restaurante: "Wok Express", total: "$40.000" }
+      ],
+      cancelados: [
+        { id: 6, cliente: "Paola Ruiz", restaurante: "Tacos México", total: "$22.000" }
+      ]
+    };
+
+    function mostrarTab(tab) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      event.target.classList.add("active");
+
+      const contenedor = document.getElementById("contenido-pedidos");
+      contenedor.innerHTML = "";
+
+      if (pedidos[tab].length === 0) {
+        contenedor.innerHTML = "<p>No hay pedidos en esta categoría.</p>";
+        return;
+      }
+
+      pedidos[tab].forEach(p => {
+        contenedor.innerHTML += `
+          <div class="pedido">
+            <p><strong>ID Pedido:</strong> ${p.id}</p>
+            <p><strong>Cliente:</strong> ${p.cliente}</p>
+            <p><strong>Restaurante:</strong> ${p.restaurante}</p>
+            <p><strong>Total:</strong> ${p.total}</p>
+            <p class="estado">Estado: ${tab.charAt(0).toUpperCase() + tab.slice(1)}</p>
+            <button class="boton" onclick="actualizarPedido(${p.id}, '${tab}')">Actualizar</button>
+          </div>
+        `;
+      });
+    }
+
+    function actualizarPedido(id, estadoActual) {
+      alert(`Actualizar pedido #${id} desde "${estadoActual}" a siguiente estado ✅`);
+    }
+
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
+    }
+
+    window.onload = () => mostrarTab("pendientes");
+  </script>
+
+</body>
+</html>

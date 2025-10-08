@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SabaGo - Mis Pedidos</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: #f5f6fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* --- Header --- */
+    header {
+      background-color:   #ffb400;;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      position: relative;
+    }
+
+    header h1 {
+      color: #ffb400;
+      font-size: 22px;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffb400;
+    }
+
+    /* --- Menú hamburguesa --- */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .bar {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #ffb400;;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    /* --- Contenido --- */
+    .container {
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #222;
+    }
+
+    .pedido {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .pedido:hover {
+      transform: scale(1.02);
+    }
+
+    .estado {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: white;
+      display: inline-block;
+    }
+
+    .pendiente { background-color: #ffa502; }
+    .preparacion { background-color: #1e90ff; }
+    .camino { background-color: #2ed573; }
+    .entregado { background-color: #00b894; }
+    .cancelado { background-color: #ff4757; }
+
+    .volver {
+      display: block;
+      width: fit-content;
+      margin: 30px auto 0;
+      background-color: #ffb400;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .volver:hover {
+      background-color: #e09e00;
+    }
+
+    footer {
+      text-align: center;
+      background: #222;
+      color: white;
+      padding: 10px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html"> <img src="assets\logoTransparente.png" alt="" style="width: 200px;"></a>
+   
+  
+
+    <div class="menu-toggle" id="menu-toggle">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <nav id="menu">
+      <a href="inicio.html">Inicio</a>
+      <a href="cliente.html">Restaurantes</a>
+      <a href="mis_pedidos.html">Mis pedidos</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Mis pedidos recientes</h2>
+
+    <div id="lista-pedidos"></div>
+
+    <a href="cliente.html" class="volver">Volver al menú principal</a>
+  </div>
+
+  <footer>
+    © 2025 SabaGo. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // --- Lista de pedidos ---
+    const pedidos = [
+      { id: 1, restaurante: "Burger House", total: "$25.000", estado: "pendiente" },
+      { id: 2, restaurante: "Pizzería Roma", total: "$30.000", estado: "preparacion" },
+      { id: 3, restaurante: "Wok Express", total: "$42.000", estado: "camino" },
+      { id: 4, restaurante: "La Arepa Loca", total: "$20.000", estado: "entregado" },
+      { id: 5, restaurante: "Tacos México", total: "$22.000", estado: "cancelado" }
+    ];
+
+    const lista = document.getElementById("lista-pedidos");
+
+    function formatearEstado(estado) {
+      const estados = {
+        pendiente: "Pendiente ⏳",
+        preparacion: "En preparación 👨‍🍳",
+        camino: "En camino 🛵",
+        entregado: "Entregado ✅",
+        cancelado: "Cancelado ❌"
+      };
+      return estados[estado];
+    }
+
+    function mostrarPedidos() {
+      lista.innerHTML = "";
+      pedidos.forEach(p => {
+        lista.innerHTML += `
+          <div class="pedido">
+            <h3>📦 Pedido #${p.id}</h3>
+            <p><strong>Restaurante:</strong> ${p.restaurante}</p>
+            <p><strong>Total:</strong> ${p.total}</p>
+            <p><span class="estado ${p.estado}">${formatearEstado(p.estado)}</span></p>
+          </div>
+        `;
+      });
+    }
+
+    function simularActualizacion() {
+      setInterval(() => {
+        pedidos.forEach(p => {
+          const estados = ["pendiente", "preparacion", "camino", "entregado"];
+          const random = Math.floor(Math.random() * estados.length);
+          p.estado = estados[random];
+        });
+        mostrarPedidos();
+      }, 4000);
+    }
+
+    // --- Menú hamburguesa ---
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+
+    window.onload = () => {
+      mostrarPedidos();
+      simularActualizacion();
+    };
+  </script>
+
+</body>
+</html>

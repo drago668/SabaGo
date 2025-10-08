@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SabaGo</title>
+
+    <style>
+        /* --- Estilos generales --- */
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: #ffb400;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            color: #ffb400;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        header img {
+            width: 150px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 5px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Menú hamburguesa --- */
+        .menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-btn div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* --- Contenedor de restaurantes --- */
+        .container {
+            padding: 20px 40px;
+        }
+
+        .restaurante {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .restaurante:hover {
+            transform: scale(1.02);
+        }
+
+        .menu4 {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .menu-item {
+            background-color: #f1f1f1;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .pedido-btn {
+            background-color: #ffb400;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .pedido-btn:hover {
+            background-color: #e5a000;
+        }
+
+        #mapa {
+            margin-top: 25px;
+            height: 300px;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* --- Responsivo --- */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: #ffb400;
+                flex-direction: column;
+                text-align: center;
+                padding: 15px 0;
+                gap: 10px;
+            }
+
+            nav.active {
+                display: flex;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .menu-btn {
+                display: flex;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="inicio.html"><img src="assets/color en negativo.png" alt="SabaGo Logo"></a>
+
+        <nav id="menu">
+            <a href="admin.html">Administrador</a>
+            <a href="index.html">Inicio</a>
+            <a href="mis_pedidos.html">Mis pedidos</a>
+            <a href="login.html">Cerrar sesión</a>
+        </nav>
+
+        <div class="menu-btn" id="menu-btn">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Restaurantes Disponibles</h2>
+
+        <div class="restaurante" onclick="toggleMenu('menu1')">
+            <h3>🍔 Burger House</h3>
+            <p>Comida rápida y deliciosa</p>
+            <div id="menu1" class="menu4">
+                <div class="menu-item">Hamburguesa Clásica - $18.000</div>
+                <div class="menu-item">Papas con queso - $10.000</div>
+                <button class="pedido-btn" onclick="hacerPedido('Burger House')">Hacer pedido</button>
+            </div>
+        </div>
+
+        <div class="restaurante" onclick="toggleMenu('menu2')">
+            <h3>🍕 Pizzería Roma</h3>
+            <p>Auténtica pizza italiana</p>
+            <div id="menu2" class="menu4">
+                <div class="menu-item">Pizza Margarita - $22.000</div>
+                <div class="menu-item">Pizza Pepperoni - $24.000</div>
+                <button class="pedido-btn" onclick="hacerPedido('Pizzería Roma')">Hacer pedido</button>
+            </div>
+        </div>
+
+        <div id="mapa"></div>
+    </div>
+
+    <script>
+        // Mostrar/Ocultar carta del restaurante
+        function toggleMenu(id) {
+            const menu = document.getElementById(id);
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        // Simulación de hacer pedido
+        function hacerPedido(nombreRestaurante) {
+            alert("Tu pedido en " + nombreRestaurante + " ha sido registrado y está en preparación 🍽️");
+        }
+
+        // Mostrar un mapa con la ubicación general
+        function initMap() {
+            const mapa = document.getElementById("mapa");
+            mapa.innerHTML = `
+        <iframe
+          width="100%"
+          height="100%"
+          style="border:0; border-radius:10px;"
+          loading="lazy"
+          allowfullscreen
+          src="https://www.google.com/maps?q=Madrid+Cundinamarca&output=embed">
+        </iframe>`;
+        }
+
+        // Activar menú hamburguesa
+        const menuBtn = document.getElementById("menu-btn");
+        const menu = document.getElementById("menu");
+
+        menuBtn.addEventListener("click", () => {
+            menu.classList.toggle("active");
+            menuBtn.classList.toggle("open");
+        });
+
+        window.onload = initMap;
+    </script>
+
+</body>
+
+</html>

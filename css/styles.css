@@ -1,0 +1,125 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9fafc;
+  margin: 0;
+  color: #333;
+}
+
+.header {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo span {
+  color: #f4a100;
+  font-weight: bold;
+}
+
+.nav .tab {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav .tab.active {
+  border-bottom: 2px solid #f4a100;
+  color: #f4a100;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.stats .card {
+  background: #fff;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.pedidos {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.pedidos table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pedidos th, .pedidos td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.asignar {
+  margin-top: 10px;
+  background: #f4a100;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mapa {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.mapa img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 22px;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  transition: .3s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; width: 16px;
+  left: 3px; bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: .3s;
+}
+input:checked + .slider {
+  background-color: #f4a100;
+}
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
